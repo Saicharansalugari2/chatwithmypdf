@@ -1,4 +1,4 @@
-export const runtime = "nodejs"; // Force Node.js runtime
+export const runtime = "nodejs"; 
 
 import { getContext } from "@/lib/context";
 import { db } from "@/lib/db";
@@ -6,9 +6,9 @@ import { chats, messages as _messages } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { streamText } from "ai";
-import { openai } from "@ai-sdk/openai"; // ✅ Correct import
+import { openai } from "@ai-sdk/openai"; 
 
-// Define the Message type
+
 type Message = {
   role: "user" | "system" | "assistant";
   content: string;
@@ -36,16 +36,16 @@ export async function POST(req: Request) {
       If the context does not provide the answer, AI assistant will respond with "I'm sorry, but I don't know the answer."`,
     };
 
-    // Use 'messages' instead of 'prompt'
+    
     const result = await streamText({
-      model: openai("gpt-3.5-turbo"), // ✅ Correct usage
+      model: openai("gpt-3.5-turbo"), 
       messages: [
         systemPrompt,
         ...messages.filter((message: Message) => message.role === "user"),
       ],
     });
 
-    return result.toDataStreamResponse(); // ✅ Correct streaming response
+    return result.toDataStreamResponse(); 
 
   } catch (error) {
     console.error("Error in chat completion:", error);
