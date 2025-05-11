@@ -9,7 +9,7 @@ import { chats } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
-import VideoPreview from "@/components/VideoPreview"; // Import the VideoPreview component
+import VideoPreview from "@/components/VideoPreview"; 
 
 export default async function Home() {
   const { userId } = await auth();
