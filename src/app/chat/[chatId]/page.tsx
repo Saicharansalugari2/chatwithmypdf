@@ -4,7 +4,7 @@ import PDFViewer from "@/components/PDFViewer";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
 import { checkSubscription } from "@/lib/subscription";
-import { currentUser } from "@clerk/nextjs/server";  // Corrected import for server-side user info
+import { currentUser } from "@clerk/nextjs/server";  
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import React from "react";
