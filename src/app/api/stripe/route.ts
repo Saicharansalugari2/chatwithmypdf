@@ -9,14 +9,14 @@ const return_url = process.env.NEXT_BASE_URL + "/";
 
 export async function GET() {
   try {
-    const user = await currentUser();  // Get the current user
+    const user = await currentUser(); 
 
     if (!user) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
     // Now that we know user is not null, we can safely access userId
-    const userId = user.id;  // `id` is a safe property on `user`
+    const userId = user.id;  
 
     const _userSubscriptions = await db
       .select()
@@ -39,7 +39,7 @@ export async function GET() {
       payment_method_types: ["card"],
       mode: "subscription",
       billing_address_collection: "auto",
-      customer_email: user.emailAddresses[0].emailAddress,  // `user.emailAddresses` is defined
+      customer_email: user.emailAddresses[0].emailAddress,  
       line_items: [
         {
           price_data: {
