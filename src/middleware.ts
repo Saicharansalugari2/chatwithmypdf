@@ -2,24 +2,28 @@ import { clerkMiddleware } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export default clerkMiddleware(async (auth, req) => {
-  const { userId } = (await auth()) || {}; // Get the user ID if authenticated
+  // Await the authentication result
+  const user = await auth(); 
+  const { userId } = user || {}; // Get userId if authenticated
 
-  // Defined public routes that don't need authentication
+  // Public routes that don’t require authentication
   const publicRoutes = ["/", "/sign-in", "/sign-up", "/api/webhook", "/video.mp4"];
 
-  // If the user is not authenticated and trying to access a protected route, redirect
+  // Check if the user is accessing a protected route and is not authenticated
   if (!publicRoutes.includes(req.nextUrl.pathname) && !userId) {
     if (req.nextUrl.pathname === "/sign-in") {
-      // Redirected unauthenticated users trying to access the sign-in page to the sign-up page
+      // Redirect unauthenticated users trying to access the sign-in page to sign-up
       return NextResponse.redirect(new URL("/sign-up?message=create-an-account", req.url));
     }
-    // For other non-public routes, just redirect to sign-up
+    // Redirect to sign-up for any other non-public route
     return NextResponse.redirect(new URL("/sign-up", req.url));
   }
 
-  return NextResponse.next(); // Allow access if authenticated or on a public route
+  // Continue if authenticated or on a public route
+  return NextResponse.next();
 });
 
+// Define the matcher for routes where middleware should run
 export const config = {
   matcher: [
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
