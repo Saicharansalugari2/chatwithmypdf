@@ -4,7 +4,7 @@ import PDFViewer from "@/components/PDFViewer";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
 import { checkSubscription } from "@/lib/subscription";
-import { currentUser } from "@clerk/nextjs/server";  // Correct import for server-side user info
+import { currentUser } from "@clerk/nextjs/server";  // Corrected import for server-side user info
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -16,7 +16,7 @@ type Props = {
 };
 
 const ChatPage = async ({ params: { chatId } }: Props) => {
-  const user = await currentUser();  // Use currentUser() for server-side user fetching
+  const user = await currentUser();  // Used the currentUser() for server-side user fetching
 
   if (!user) {
     return redirect("/sign-in");
@@ -37,7 +37,7 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
   const isPro = await checkSubscription();
 
   return (
-    <div className="flex max-h-screen overflow-scroll bg-black text-white"> {/* Gray background for the entire page */}
+    <div className="flex max-h-screen overflow-scroll bg-black text-white"> {/* Changed to Gray background for the entire page */}
       <div className="flex w-full max-h-screen overflow-scroll">
         {/* Chat sidebar */}
         <div className="flex-[1] max-w-xs">
